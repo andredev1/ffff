@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Dashboard from "./components/Dashboard";
 import { formatData } from "./utils";
 import "./styles.css";
+import { CSVLink, CSVDownload } from "react-csv";
+
 
 export default function App() {
   const [currencies, setcurrencies] = useState([]);
@@ -88,6 +90,19 @@ export default function App() {
     };
   }, [pair]);
 
+
+
+
+  const csvData = [
+    ["firstname", "lastname", "email"],
+    ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    ["Raed", "Labes", "rl@smthing.co.com"],
+    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+  ];
+
+
+
+  
   const handleSelect = (e) => {
     let unsubMsg = {
       type: "unsubscribe",
@@ -114,6 +129,8 @@ export default function App() {
         </select>
       }
       <Dashboard price={price} data={pastData} />
+     
+<CSVLink data={csvData}>Download me</CSVLink>;
     </div>
   );
 }
