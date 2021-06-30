@@ -98,12 +98,12 @@ fetchHistoricalData();
 
 
   //const csvData=csvdata;
-  const csvData = [
-    ["firstname", "lastname", "email"],
-    ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    ["Raed", "Labes", "rl@smthing.co.com"],
-    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
-  ];
+ // const csvData = [
+ //   ["firstname", "lastname", "email"],
+ //   ["Ahmed", "Tomi", "ah@smthing.co.com"],
+ //   ["Raed", "Labes", "rl@smthing.co.com"],
+ //   ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+ // ];
 
 
   const handleSelect = (e) => {
@@ -118,7 +118,10 @@ fetchHistoricalData();
 
     setpair(e.target.value);
   };
-  
+  let csv=[];
+  if(Object.keys(csvdata).length>0){
+    csv.push(<CSVLink data={csvdata}>Download CSV</CSVLink>);
+  }
   return (
     <div className="container">
       {
@@ -132,7 +135,7 @@ fetchHistoricalData();
           })}
         </select>
       }
-      <CSVLink data={csvData}>Download CSV</CSVLink>
+      {csv}
       <Dashboard price={price} data={pastData} />
 
 
