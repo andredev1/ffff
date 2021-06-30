@@ -10,6 +10,7 @@ export default function App() {
   const [pair, setpair] = useState("");
   const [price, setprice] = useState("0.00");
   const [pastData, setpastData] = useState({});
+  const [csvdata, setcsvdata] = useState({});
   const ws = useRef(null);
 
   let first = useRef(false);
@@ -65,6 +66,10 @@ export default function App() {
     let jsonMsg = JSON.stringify(msg);
     ws.current.send(jsonMsg);
 
+
+
+
+    
     let historicalDataURL = `${url}/products/${pair}/candles?granularity=86400`;
     const fetchHistoricalData = async () => {
       let dataArr = [];
@@ -74,9 +79,10 @@ export default function App() {
       
       let formattedData = formatData(dataArr);
       setpastData(formattedData);
+      setcsvdata(dataArr)
     };
 
-    fetchHistoricalData();
+fetchHistoricalData();
 
     ws.current.onmessage = (e) => {
       let data = JSON.parse(e.data);
@@ -91,8 +97,7 @@ export default function App() {
   }, [pair]);
 
 
-
-
+  //const csvData=csvdata;
   const csvData = [
     ["firstname", "lastname", "email"],
     ["Ahmed", "Tomi", "ah@smthing.co.com"],
@@ -101,8 +106,6 @@ export default function App() {
   ];
 
 
-
-  
   const handleSelect = (e) => {
     let unsubMsg = {
       type: "unsubscribe",
@@ -115,6 +118,7 @@ export default function App() {
 
     setpair(e.target.value);
   };
+  
   return (
     <div className="container">
       {
@@ -128,9 +132,10 @@ export default function App() {
           })}
         </select>
       }
+      <CSVLink data={csvData}>Download CSV</CSVLink>
       <Dashboard price={price} data={pastData} />
-     
-<CSVLink data={csvData}>Download me</CSVLink>;
+
+
     </div>
   );
 }
