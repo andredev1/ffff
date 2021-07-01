@@ -34,7 +34,7 @@ export default function App() {
         .then((data) => (pairs = data));
       
       let filtered = pairs.filter((pair) => {
-        if (pair.quote_currency === "USD") {
+        if (pair.quote_currency === "USDT") {
           return pair;
         }
       });
