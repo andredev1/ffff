@@ -14,17 +14,18 @@ export const formatData = (data) => {
   
     let dates = data.map((val) => {
       const ts = val[0];
-      let date = new Date(ts * 1000);
+      let date = new Date(ts);
 
       let hour = date.getHours();
       let minute = date.getMinutes();
       let second = date.getSeconds();
+      let milliseconds = date.getMilliseconds();
 
       let day = date.getDate();
       let month = date.getMonth() + 1;
       let year = date.getFullYear();
   
-      let final = `${hour}:${minute}:${second}__${day}-${month}-${year}`;
+      let final = `${hour}:${minute}:${second}:${milliseconds}__${day}-${month}-${year}`;
       return final;
     });
   

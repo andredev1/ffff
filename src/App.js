@@ -34,7 +34,7 @@ export default function App() {
         .then((data) => (pairs = data));
       
       let filtered = pairs.filter((pair) => {
-        if (pair.quote_currency === "USDT") {
+        if (pair.quote_currency === "USD") {
           return pair;
         }
       });
@@ -108,17 +108,18 @@ export default function App() {
 macdarray=MACD.calculate(macdInput);
 
 for (let i=0;i<macdarray.length;i++){
-  let date = new Date(dataArr[i][0] * 1000);
+  let date = new Date(dataArr[i][0]);
 
   let hour = date.getHours();
   let minute = date.getMinutes();
   let second = date.getSeconds();
+  let milliseconds = date.getMilliseconds();
 
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
 
-  let final = `${hour}:${minute}:${second}__${day}-${month}-${year}`;
+  let final = `${hour}:${minute}:${second}:${milliseconds}__${day}-${month}-${year}`;
   macdarray[i]["date"]=final;
   macdarray[i]["closing"]=dataArr[i][2];
 }
