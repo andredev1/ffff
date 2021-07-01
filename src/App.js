@@ -108,7 +108,18 @@ export default function App() {
 macdarray=MACD.calculate(macdInput);
 
 for (let i=0;i<macdarray.length;i++){
-  macdarray[i]["date"]=dataArr[i][0];
+  let date = new Date(dataArr[i][0] * 1000);
+
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  let second = date.getSeconds();
+
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  let final = `${hour}:${minute}:${second}__${day}-${month}-${year}`;
+  macdarray[i]["date"]=final;
   macdarray[i]["closing"]=dataArr[i][2];
 }
 console.log("done");
@@ -129,16 +140,6 @@ fetchHistoricalData();
       }
     };
   }, [pair]);
-
-
-  //const csvData=csvdata;
- // const csvData = [
- //   ["firstname", "lastname", "email"],
- //   ["Ahmed", "Tomi", "ah@smthing.co.com"],
- //   ["Raed", "Labes", "rl@smthing.co.com"],
- //   ["Yezzi", "Min l3b", "ymin@cocococo.com"]
- // ];
-
 
   const handleSelect = (e) => {
     let unsubMsg = {
