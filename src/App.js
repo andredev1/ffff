@@ -108,7 +108,7 @@ export default function App() {
 macdarray=MACD.calculate(macdInput);
 
 for (let i=0;i<macdarray.length;i++){
-  let date = new Date(dataArr[i][0]);
+  let date = new Date(dataArr[i][0] * 1000);
 
   let hour = date.getHours();
   let minute = date.getMinutes();
