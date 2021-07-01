@@ -10,11 +10,15 @@ export default function App() {
   const [currencies, setcurrencies] = useState([]);
   const [pair, setpair] = useState("");
   const [price, setprice] = useState("0.00");
-  const [priceSMA, setpriceSMA] = useState({});
+  //var [priceSMA, setpriceSMA] = useState("");
   const [priceOBV, setpriceOBV] = useState({});
   const [pastData, setpastData] = useState({});
   const [csvdata, setcsvdata] = useState({});
   const ws = useRef(null);
+  var printarray=[];
+  var ssma=useState([]);
+  var macdarray=[];
+  const [macdarray2, setmacd2] = useState({});
 
   let first = useRef(false);
   const url = "https://api.pro.coinbase.com";
@@ -85,6 +89,31 @@ export default function App() {
      // setpriceSMA(sma(pastData))
      // setpriceOBV(macd(pastData))
       setcsvdata(dataArr)
+     let col2 = [];
+     for (let i=0;i<dataArr.length;i++){
+      let val = dataArr[i][2];
+      col2.push(val);
+    }
+      
+      var MACD = require('technicalindicators').MACD;
+      var macdInput = {
+      values            : col2,
+      fastPeriod        : 12,
+      slowPeriod        : 26,
+      signalPeriod      :  9,
+      SimpleMAOscillator: false,
+      SimpleMASignal    : false
+    }
+
+macdarray=MACD.calculate(macdInput);
+
+for (let i=0;i<macdarray.length;i++){
+  macdarray[i]["date"]=dataArr[i][0];
+  macdarray[i]["closing"]=dataArr[i][2];
+}
+console.log("done");
+setmacd2(macdarray)
+ 
     };
 
 fetchHistoricalData();
@@ -123,10 +152,15 @@ fetchHistoricalData();
 
     setpair(e.target.value);
   };
+  
+  
   let csv=[];
-  if(Object.keys(csvdata).length>0){
-    csv.push(<CSVLink data={csvdata}>Download CSV</CSVLink>);
+  if(Object.keys(macdarray2).length>0){
+    csv.push(<CSVLink data={macdarray2}>Download CSV</CSVLink>);
   }
+
+
+
   return (
     <div className="container">
       {
@@ -142,8 +176,12 @@ fetchHistoricalData();
       }
       {csv}
       <Dashboard price={price} data={pastData} />
+      {printarray}
       <Dashboard price={price} data={pastData} />
-      <Dashboard price={price} data={pastData} />
+
+      obv macd crossing 
+      slippage indicators
+      
 
     </div>
   );
