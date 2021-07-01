@@ -3,12 +3,15 @@ import Dashboard from "./components/Dashboard";
 import { formatData } from "./utils";
 import "./styles.css";
 import { CSVLink, CSVDownload } from "react-csv";
+import { macd, sma } from "technicalindicators";
 
 
 export default function App() {
   const [currencies, setcurrencies] = useState([]);
   const [pair, setpair] = useState("");
   const [price, setprice] = useState("0.00");
+  const [priceSMA, setpriceSMA] = useState({});
+  const [priceOBV, setpriceOBV] = useState({});
   const [pastData, setpastData] = useState({});
   const [csvdata, setcsvdata] = useState({});
   const ws = useRef(null);
@@ -79,6 +82,8 @@ export default function App() {
       
       let formattedData = formatData(dataArr);
       setpastData(formattedData);
+     // setpriceSMA(sma(pastData))
+     // setpriceOBV(macd(pastData))
       setcsvdata(dataArr)
     };
 
@@ -137,7 +142,8 @@ fetchHistoricalData();
       }
       {csv}
       <Dashboard price={price} data={pastData} />
-
+      <Dashboard price={price} data={pastData} />
+      <Dashboard price={price} data={pastData} />
 
     </div>
   );
