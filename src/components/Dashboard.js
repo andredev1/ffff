@@ -4,7 +4,7 @@ import { Line } from "react-chartjs-2";
 function Dashboard({ price, data }) {
   const opts = {
     tooltips: {
-      intersect: false,
+      intersect: true,
       mode: "index"
     },
     responsive: true,

@@ -1,10 +1,13 @@
+import 'devextreme/dist/css/dx.common.css';
+import 'devextreme/dist/css/dx.light.css';
 import React, { useState, useEffect, useRef } from "react";
 import Dashboard from "./components/Dashboard";
 import { formatData } from "./utils";
+import { formatmacdData } from "./formatmacd";
 import "./styles.css";
+import 'devextreme/dist/css/dx.light.css';
 import { CSVLink, CSVDownload } from "react-csv";
 import { macd, sma } from "technicalindicators";
-
 
 export default function App() {
   const [currencies, setcurrencies] = useState([]);
@@ -19,6 +22,15 @@ export default function App() {
   var ssma=useState([]);
   var macdarray=[];
   const [macdarray2, setmacd2] = useState({});
+  const [macdarray3, setmacd3] = useState({});
+  const opts = {
+    tooltips: {
+      intersect: false,
+      mode: "index"
+    },
+    responsive: true,
+    maintainAspectRatio: false
+  };
 
   let first = useRef(false);
   const url = "https://api.pro.coinbase.com";
@@ -77,7 +89,7 @@ export default function App() {
 
 
     
-    let historicalDataURL = `${url}/products/${pair}/candles?granularity=86400`;
+    let historicalDataURL = `${url}/products/${pair}/candles?granularity=60`;
     const fetchHistoricalData = async () => {
       let dataArr = [];
       await fetch(historicalDataURL)
@@ -85,6 +97,7 @@ export default function App() {
         .then((data) => (dataArr = data));
       
       let formattedData = formatData(dataArr);
+      
       setpastData(formattedData);
      // setpriceSMA(sma(pastData))
      // setpriceOBV(macd(pastData))
@@ -107,6 +120,8 @@ export default function App() {
 
 macdarray=MACD.calculate(macdInput);
 
+
+
 for (let i=0;i<macdarray.length;i++){
   let date = new Date(dataArr[i][0] * 1000);
 
@@ -124,7 +139,11 @@ for (let i=0;i<macdarray.length;i++){
   macdarray[i]["closing"]=dataArr[i][2];
 }
 console.log("done");
-setmacd2(macdarray)
+let macd=formatmacdData(macdarray);
+setmacd3(macd)
+
+
+
  
     };
 
@@ -178,8 +197,9 @@ fetchHistoricalData();
       }
       {csv}
       <Dashboard price={price} data={pastData} />
-      {printarray}
-      <Dashboard price={price} data={pastData} />
+      <Dashboard price={price} data={macdarray3} />
+
+
 
       obv macd crossing 
       slippage indicators
