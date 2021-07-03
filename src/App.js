@@ -80,15 +80,19 @@ export default function App() {
         .then((res) => res.json())
         .then((data) => (dataArr = data));
       
-      let formattedData = formatData(dataArr);
+      let dataArr2 = [];
+      for (let i=0;i<60;i++){
+         dataArr2.push(dataArr[i]);
+      }
+      let formattedData = formatData(dataArr2);
       
       setpastData(formattedData);
      // setpriceSMA(sma(pastData))
      // setpriceOBV(macd(pastData))
       
      let col2 = [];
-     for (let i=0;i<dataArr.length;i++){
-      let val = dataArr[i][2];
+     for (let i=0;i<dataArr2.length;i++){
+      let val = dataArr2[i][2];
       col2.push(val);
     }
       
@@ -194,7 +198,7 @@ fetchHistoricalData();
       setTimeout(function(){ 
         
         setrefresh((new Date()).getTime()); }
-        , 5000);
+        , 50000000);
     };
 
     refreshCall();
