@@ -25,7 +25,7 @@ export default function App() {
   const [macdarray3, setmacd3] = useState({});
   const opts = {
     tooltips: {
-      intersect: false,
+      intersect: true,
       mode: "index"
     },
     responsive: true,
@@ -101,7 +101,7 @@ export default function App() {
       setpastData(formattedData);
      // setpriceSMA(sma(pastData))
      // setpriceOBV(macd(pastData))
-      setcsvdata(dataArr)
+      
      let col2 = [];
      for (let i=0;i<dataArr.length;i++){
       let val = dataArr[i][2];
@@ -141,7 +141,7 @@ for (let i=0;i<macdarray.length;i++){
 console.log("done");
 let macd=formatmacdData(macdarray);
 setmacd3(macd)
-
+setmacd2(macdarray)
 
 
  
