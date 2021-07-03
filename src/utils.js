@@ -3,7 +3,28 @@ export const formatData = (data) => {
       labels: [],
       datasets: [
         {
-          label: "Price",
+          label: "Col1",
+          data: [],
+          backgroundColor: "rgb(10, 10, 10)",
+          borderColor: "rgba(200, 200, 200)",
+          fill: false
+        },
+        {
+          label: "Col2",
+          data: [],
+          backgroundColor: "rgb(10, 10, 10)",
+          borderColor: "rgba(200, 200, 200)",
+          fill: false
+        },
+        {
+          label: "Col3",
+          data: [],
+          backgroundColor: "rgb(10, 10, 10)",
+          borderColor: "rgba(200, 200, 200)",
+          fill: false
+        },
+        {
+          label: "Col4",
           data: [],
           backgroundColor: "rgb(10, 10, 10)",
           borderColor: "rgba(200, 200, 200)",
@@ -29,15 +50,27 @@ export const formatData = (data) => {
       return final;
     });
   
-    let priceArr = data.map((val) => {
+    let col1 = data.map((val) => {
+      return val[1];
+    });
+    let col2 = data.map((val) => {
+      return val[2];
+    });
+    let col3 = data.map((val) => {
+      return val[3];
+    });
+    let col4 = data.map((val) => {
       return val[4];
     });
-  
-    priceArr.reverse();
+    col1.reverse();
+    col2.reverse();
+    col3.reverse();
+    col4.reverse();
     dates.reverse();
     finalData.labels = dates;
-    finalData.datasets[0].data = priceArr;
-
+    finalData.datasets[0].data = col1;
+    finalData.datasets[1].data = col2;
+    finalData.datasets[2].data = col3;
+    finalData.datasets[3].data = col4;
     return finalData;
   };
-  

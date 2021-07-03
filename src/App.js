@@ -23,6 +23,7 @@ export default function App() {
   var macdarray=[];
   const [macdarray2, setmacd2] = useState({});
   const [macdarray3, setmacd3] = useState({});
+  const [refresh, setrefresh] = useState(0);
   const opts = {
     tooltips: {
       intersect: true,
@@ -35,6 +36,7 @@ export default function App() {
   let first = useRef(false);
   const url = "https://api.pro.coinbase.com";
 
+ 
   useEffect(() => {
     ws.current = new WebSocket("wss://ws-feed.pro.coinbase.com");
 
@@ -70,26 +72,8 @@ export default function App() {
     apiCall();
   }, []);
 
-  useEffect(() => {
-    if (!first.current) {
-      
-      return;
-    }
 
-    
-    let msg = {
-      type: "subscribe",
-      product_ids: [pair],
-      channels: ["ticker"]
-    };
-    let jsonMsg = JSON.stringify(msg);
-    ws.current.send(jsonMsg);
-
-
-
-
-    
-    let historicalDataURL = `${url}/products/${pair}/candles?granularity=60`;
+  let historicalDataURL = `${url}/products/${pair}/candles?granularity=60`;
     const fetchHistoricalData = async () => {
       let dataArr = [];
       await fetch(historicalDataURL)
@@ -136,7 +120,10 @@ for (let i=0;i<macdarray.length;i++){
 
   let final = `${hour}:${minute}:${second}:${milliseconds}__${day}-${month}-${year}`;
   macdarray[i]["date"]=final;
-  macdarray[i]["closing"]=dataArr[i][2];
+  macdarray[i]["col1"]=dataArr[i][2];
+  macdarray[i]["col2"]=dataArr[i][3];
+  macdarray[i]["col3"]=dataArr[i][4];
+  macdarray[i]["col4"]=dataArr[i][5];
 }
 console.log("done");
 let macd=formatmacdData(macdarray);
@@ -146,6 +133,24 @@ setmacd2(macdarray)
 
  
     };
+
+
+  useEffect(() => {
+    if (!first.current) {
+      
+      return;
+    }
+
+    
+    let msg = {
+      type: "subscribe",
+      product_ids: [pair],
+      channels: ["ticker"]
+    };
+    let jsonMsg = JSON.stringify(msg);
+    ws.current.send(jsonMsg);
+
+
 
 fetchHistoricalData();
 
@@ -180,6 +185,20 @@ fetchHistoricalData();
     csv.push(<CSVLink data={macdarray2}>Download CSV</CSVLink>);
   }
 
+  useEffect(() => {
+    
+    const refreshCall = () => {
+      if(pair!==""){
+        fetchHistoricalData();
+      }
+      setTimeout(function(){ 
+        
+        setrefresh((new Date()).getTime()); }
+        , 5000);
+    };
+
+    refreshCall();
+  }, [refresh]);
 
 
   return (
