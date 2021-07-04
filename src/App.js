@@ -73,17 +73,24 @@ export default function App() {
   }, []);
 
 
-  let historicalDataURL = `${url}/products/${pair}/candles?granularity=60`;
+  
     const fetchHistoricalData = async () => {
       let dataArr = [];
+      let dataArr2 = [];
+      let historicalDataURL = `${url}/products/${pair}/candles?granularity=3600&start=2021-06-25T10:00:00.000Z&end=2021-07-04T10:00:00.000Z`;
       await fetch(historicalDataURL)
         .then((res) => res.json())
         .then((data) => (dataArr = data));
-      
-      let dataArr2 = [];
-      for (let i=0;i<60;i++){
-         dataArr2.push(dataArr[i]);
-      }
+        for (let i=0;i<dataArr.length;i++){
+          dataArr2.push(dataArr[i]);
+       }
+      historicalDataURL = `${url}/products/${pair}/candles?granularity=3600&start=2021-06-14T10:00:00.000Z&end=2021-06-25T10:00:00.000Z`;
+      await fetch(historicalDataURL)
+        .then((res) => res.json())
+        .then((data) => (dataArr = data));
+        for (let i=0;i<dataArr.length;i++){
+          dataArr2.push(dataArr[i]);
+       }
       let formattedData = formatData(dataArr2);
       
       setpastData(formattedData);
@@ -111,7 +118,7 @@ macdarray=MACD.calculate(macdInput);
 
 
 for (let i=0;i<macdarray.length;i++){
-  let date = new Date(dataArr[i][0] * 1000);
+  let date = new Date(dataArr2[i][0] * 1000);
 
   let hour = date.getHours();
   let minute = date.getMinutes();
@@ -124,10 +131,10 @@ for (let i=0;i<macdarray.length;i++){
 
   let final = `${hour}:${minute}:${second}:${milliseconds}__${day}-${month}-${year}`;
   macdarray[i]["date"]=final;
-  macdarray[i]["col1"]=dataArr[i][2];
-  macdarray[i]["col2"]=dataArr[i][3];
-  macdarray[i]["col3"]=dataArr[i][4];
-  macdarray[i]["col4"]=dataArr[i][5];
+  macdarray[i]["col1"]=dataArr2[i][2];
+  macdarray[i]["col2"]=dataArr2[i][3];
+  macdarray[i]["col3"]=dataArr2[i][4];
+  macdarray[i]["col4"]=dataArr2[i][5];
 }
 console.log("done");
 let macd=formatmacdData(macdarray);
