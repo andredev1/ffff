@@ -77,20 +77,20 @@ export default function App() {
     const fetchHistoricalData = async () => {
       let dataArr = [];
       let dataArr2 = [];
-      let historicalDataURL = `${url}/products/${pair}/candles?granularity=3600&start=2021-06-25T10:00:00.000Z&end=2021-07-04T10:00:00.000Z`;
+      let historicalDataURL = `${url}/products/${pair}/candles?granularity=60`;
       await fetch(historicalDataURL)
         .then((res) => res.json())
         .then((data) => (dataArr = data));
-        for (let i=0;i<dataArr.length;i++){
+        for (let i=0;i<60;i++){
           dataArr2.push(dataArr[i]);
        }
-      historicalDataURL = `${url}/products/${pair}/candles?granularity=3600&start=2021-06-14T10:00:00.000Z&end=2021-06-25T10:00:00.000Z`;
-      await fetch(historicalDataURL)
-        .then((res) => res.json())
-        .then((data) => (dataArr = data));
-        for (let i=0;i<dataArr.length;i++){
-          dataArr2.push(dataArr[i]);
-       }
+      // historicalDataURL = `${url}/products/${pair}/candles?granularity=3600&start=2021-06-14T10:00:00.000Z&end=2021-06-25T10:00:00.000Z`;
+      // await fetch(historicalDataURL)
+      //   .then((res) => res.json())
+      //   .then((data) => (dataArr = data));
+      //   for (let i=0;i<dataArr.length;i++){
+      //     dataArr2.push(dataArr[i]);
+      //  }
       let formattedData = formatData(dataArr2);
       
       setpastData(formattedData);
