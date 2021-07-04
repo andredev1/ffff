@@ -97,15 +97,15 @@ export default function App() {
      // setpriceSMA(sma(pastData))
      // setpriceOBV(macd(pastData))
       
-     let col4 = [];
+     let col3 = [];
      for (let i=0;i<dataArr2.length;i++){
-      let val = dataArr2[i][4];
-      col4.push(val);
+      let val = dataArr2[i][3];
+      col3.push(val);
     }
       
       var MACD = require('technicalindicators').MACD;
       var macdInput = {
-      values            : col4,
+      values            : col3,
       fastPeriod        : 12,
       slowPeriod        : 26,
       signalPeriod      :  9,
