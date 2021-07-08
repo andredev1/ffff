@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const formatData = (data) => {
     let finalData = {
       labels: [],
@@ -74,3 +76,9 @@ export const formatData = (data) => {
     finalData.datasets[3].data = col4;
     return finalData;
   };
+
+  export const subtractHours = ((strdate,hours)=>{
+    var time = moment.duration(hours+":00:00");
+    strdate=moment(strdate).subtract(time);
+    return strdate.format("YYYY-MM-DDTHH:mm:ss.sssZ");;
+  });
