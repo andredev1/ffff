@@ -88,7 +88,7 @@ export default function App() {
           dataArr2.push(dataArr[i]);
        }
        let enddate="";
-       for (let i=1;i<5;i++){
+       for (let i=1;i<100;i++){
 
          moment1=new Date();
          let strhour=(i*5).toString();
